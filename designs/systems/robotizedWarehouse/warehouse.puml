@@ -1,0 +1,61 @@
+@startuml
+
+interface Warehouse {
+  + addItem(item: Item): void
+  + removeItem(item: Item): void
+  + getItem(id: String): Item
+  + getAllItems(): List<Item>
+}
+
+interface Robot {
+  + moveTo(location: Location): void
+  + pickItem(item: Item): void
+  + dropItem(item: Item, location: Location): void
+}
+
+class Item {
+  - String id
+  - String name
+  - double weight
+  + Item(id: String, name: String, weight: double)
+  + getID(): String
+  + getName(): String
+  + getWeight(): double
+}
+
+class Location {
+  - int x
+  - int y
+  + Location(x: int, y: int)
+  + getX(): int
+  + getY(): int
+}
+
+class AutomatedWarehouse implements Warehouse {
+  - List<Item> items
+  - List<Robot> robots
+  + addItem(item: Item): void
+  + removeItem(item: Item): void
+  + getItem(id: String): Item
+  + getAllItems(): List<Item>
+  + addRobot(robot: Robot): void
+  + removeRobot(robot: Robot): void
+  + getRobots(): List<Robot>
+}
+
+class AutomatedRobot implements Robot {
+  - Location currentLocation
+  - List<Item> itemsCarried
+  + moveTo(location: Location): void
+  + pickItem(item: Item): void
+  + dropItem(item: Item, location: Location): void
+}
+
+Warehouse <|.. AutomatedWarehouse
+Robot <|.. AutomatedRobot
+
+AutomatedWarehouse "1" *-- "*" Item
+AutomatedWarehouse "1" *-- "*" Robot
+AutomatedRobot "1" o-- "1" Location
+
+@enduml

@@ -1,0 +1,52 @@
+@startuml
+
+interface PowerSwitch {
+  + isOn(): boolean
+  + turnOn(): void
+  + turnOff(): void
+}
+
+interface Fillable {
+  + getLevel(): int
+  + fill(level: int): void
+}
+
+abstract class CoffeeMachine implements PowerSwitch, Fillable {
+  - String name
+  - int waterLevel
+  - int milkLevel
+  - int coffeeBeansLevel
+  + CoffeeMachine(name: String)
+  + getName(): String
+  + getLevel(): int
+  + fill(level: int): void
+  + makeCoffee(): void
+  + cleanMachine(): void
+}
+
+class BasicCoffeeMachine extends CoffeeMachine {
+  + BasicCoffeeMachine(name: String)
+  + makeCoffee(): void
+}
+
+interface Beverage {
+  + getType(): String
+}
+
+class Coffee implements Beverage {
+  - String type
+  + Coffee(type: String)
+  + getType(): String
+}
+
+class Cup {
+  - int size
+  + Cup(size: int)
+  + getSize(): int
+}
+
+CoffeeMachine <|.. BasicCoffeeMachine
+CoffeeMachine "1" *-- "1" Beverage
+CoffeeMachine "1" *-- "1" Cup
+
+@enduml

@@ -1,0 +1,115 @@
+@startuml
+
+interface Board {
+  + initializeBoard(): void
+  + isValidMove(): boolean
+  + makeMove(): void
+  + isGameOver(): boolean
+}
+
+class ConcreteBoard {
+  + initializeBoard(): void
+  + isValidMove(): boolean
+  + makeMove(): void
+  + isGameOver(): boolean
+}
+
+class Cell {
+  - Position position
+  - Piece piece
+  + getPiece(): Piece
+  + setPiece(): void
+  + isEmpty(): boolean
+}
+
+class Piece {
+  - Color color
+  - Type type
+  + getColor(): Color
+  + getType(): Type
+  + isKing(): boolean
+}
+
+interface Player {
+  + getColor(): Color
+  + getCapturedPieces(): List<Piece>
+}
+
+abstract class AbstractPlayer implements Player {
+  - Color color
+  - List<Piece> capturedPieces
+  + getColor(): Color
+  + getCapturedPieces(): List<Piece>
+}
+
+class ConcretePlayer extends AbstractPlayer {
+  + getColor(): Color
+  + getCapturedPieces(): List<Piece>
+}
+
+class Move {
+  - Cell sourceCell
+  - Cell destinationCell
+  - List<Piece> capturedPieces
+  + getSourceCell(): Cell
+  + getDestinationCell(): Cell
+  + getCapturedPieces(): List<Piece>
+}
+
+interface Game {
+  + startGame(): void
+  + switchPlayer(): void
+  + processMove(): void
+}
+
+abstract class AbstractGame implements Game {
+  - Board board
+  - Map<Color, Player> players
+  - Player currentPlayer
+  + startGame(): void
+  + switchPlayer(): void
+  + processMove(): void
+}
+
+class ConcreteGame extends AbstractGame {
+  + startGame(): void
+  + switchPlayer(): void
+  + processMove(): void
+}
+
+interface UserInterface {
+  + displayBoard(): void
+  + displayMessage(): void
+  + getPlayerInput(): void
+}
+
+abstract class AbstractUserInterface implements UserInterface {
+  + displayBoard(): void
+  + displayMessage(): void
+  + getPlayerInput(): void
+}
+
+class ConcreteUserInterface extends AbstractUserInterface {
+  + displayBoard(): void
+  + displayMessage(): void
+  + getPlayerInput(): void
+}
+
+Board <|.. ConcreteBoard
+Player <|.. ConcretePlayer
+Game <|.. ConcreteGame
+UserInterface <|.. ConcreteUserInterface
+Player <|-- AbstractPlayer
+Game <|-- AbstractGame
+UserInterface <|-- AbstractUserInterface
+
+Board "1" *-- "64" Cell
+Cell "1" -- "0..1" Piece
+Piece "1" -- "1" Color
+Piece "1" -- "1" Type
+Player "1" -- "1..*" Piece
+Move "1" -- "1" Cell
+Move "0..*" -- "0..*" Piece
+Game "1" *-- "1" UserInterface
+
+@enduml

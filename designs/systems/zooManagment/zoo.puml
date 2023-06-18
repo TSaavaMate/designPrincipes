@@ -1,0 +1,60 @@
+@startuml
+
+interface Animal {
+  + eat(): void
+}
+
+abstract class AbstractAnimal implements Animal {
+  - String name
+  + AbstractAnimal(name: String)
+  + getName(): String
+  + eat(): void
+}
+
+interface Food {
+  + getFoodType(): String
+}
+
+class HerbivoreFood implements Food {
+  + getFoodType(): String
+}
+
+class CarnivoreFood implements Food {
+  + getFoodType(): String
+}
+
+class OmnivoreFood implements Food {
+  + getFoodType(): String
+}
+
+class Herbivore extends AbstractAnimal {
+  + Herbivore(name: String)
+  + eat(): void
+}
+
+class Carnivore extends AbstractAnimal {
+  + Carnivore(name: String)
+  + eat(): void
+}
+
+class Omnivore extends AbstractAnimal {
+  + Omnivore(name: String)
+  + eat(): void
+}
+
+class Zookeeper {
+  - List<Animal> animals
+  + addAnimal(animal: Animal): void
+  + removeAnimal(animal: Animal): void
+  + feedAnimals(): void
+}
+
+Animal <|.. AbstractAnimal
+Food <|.. HerbivoreFood
+Food <|.. CarnivoreFood
+Food <|.. OmnivoreFood
+AbstractAnimal <|-- Herbivore
+AbstractAnimal <|-- Carnivore
+AbstractAnimal <|-- Omnivore
+
+@enduml

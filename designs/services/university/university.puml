@@ -1,0 +1,47 @@
+@startuml
+
+class University {
+  - String name
+  - List<Department> departments
+  + University(name: String)
+  + getName(): String
+  + addDepartment(department: Department): void
+  + getDepartments(): List<Department>
+}
+
+class Department {
+  - String name
+  - List<Course> courses
+  - List<Student> students
+  + Department(name: String)
+  + getName(): String
+  + addCourse(course: Course): void
+  + getCourses(): List<Course>
+  + addStudent(student: Student): void
+  + getStudents(): List<Student>
+}
+
+class Course {
+  - String name
+  - int credits
+  + Course(name: String, credits: int)
+  + getName(): String
+  + getCredits(): int
+}
+
+class Student {
+  - String name
+  - int id
+  - List<Course> enrolledCourses
+  + Student(name: String, id: int)
+  + getName(): String
+  + getID(): int
+  + enroll(course: Course): void
+  + getEnrolledCourses(): List<Course>
+}
+
+University "1" *-- "*" Department
+Department "1" *-- "*" Course
+Department "1" *-- "*" Student
+
+@enduml

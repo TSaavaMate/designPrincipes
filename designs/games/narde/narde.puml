@@ -1,0 +1,113 @@
+@startuml
+
+interface Board {
+  + initializeBoard(): void
+  + isValidMove(): boolean
+  + makeMove(): void
+  + isGameOver(): boolean
+}
+
+class ConcreteBoard {
+  + initializeBoard(): void
+  + isValidMove(): boolean
+  + makeMove(): void
+  + isGameOver(): boolean
+}
+
+class Cell {
+  - Position position
+  - Piece piece
+  + getPiece(): Piece
+  + setPiece(): void
+  + isEmpty(): boolean
+}
+
+abstract class Piece {
+  - Color color
+  + getColor(): Color
+  + isValidMove(): boolean
+}
+
+class Stone {
+  + getColor(): Color
+  + isValidMove(): boolean
+}
+
+interface Player {
+  + getColor(): Color
+  + makeMove(): void
+}
+
+abstract class AbstractPlayer implements Player {
+  - Color color
+  + getColor(): Color
+  + makeMove(): void
+}
+
+class ConcretePlayer extends AbstractPlayer {
+  + getColor(): Color
+  + makeMove(): void
+}
+
+class Move {
+  - Cell sourceCell
+  - Cell destinationCell
+  + getSourceCell(): Cell
+  + getDestinationCell(): Cell
+}
+
+interface Game {
+  + startGame(): void
+  + switchPlayer(): void
+  + processMove(): void
+}
+
+abstract class AbstractGame implements Game {
+  - Board board
+  - Player[] players
+  - Player currentPlayer
+  + startGame(): void
+  + switchPlayer(): void
+  + processMove(): void
+}
+
+class ConcreteGame extends AbstractGame {
+  + startGame(): void
+  + switchPlayer(): void
+  + processMove(): void
+}
+
+interface UserInterface {
+  + displayBoard(): void
+  + displayMessage(): void
+  + getPlayerInput(): void
+}
+
+abstract class AbstractUserInterface implements UserInterface {
+  + displayBoard(): void
+  + displayMessage(): void
+  + getPlayerInput(): void
+}
+
+class ConcreteUserInterface extends AbstractUserInterface {
+  + displayBoard(): void
+  + displayMessage(): void
+  + getPlayerInput(): void
+}
+
+Board <|.. ConcreteBoard
+Player <|.. ConcretePlayer
+Game <|.. ConcreteGame
+UserInterface <|.. ConcreteUserInterface
+Player <|-- AbstractPlayer
+Game <|-- AbstractGame
+UserInterface <|-- AbstractUserInterface
+
+Board "1" *-- "24" Cell
+Cell "1" -- "0..1" Piece
+Piece <|.. Stone
+Piece "1" -- "1" Color
+Move "1" -- "1" Cell
+Game "1" *-- "1" UserInterface
+
+@enduml

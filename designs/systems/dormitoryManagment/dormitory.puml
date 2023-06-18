@@ -1,0 +1,53 @@
+@startuml
+
+interface Accommodation {
+  + getName(): String
+  + getCapacity(): int
+  + isAvailable(): boolean
+  + addOccupant(student: Student): void
+  + removeOccupant(student: Student): void
+  + getOccupants(): List<Student>
+}
+
+class Dormitory implements Accommodation {
+  - String name
+  - List<Room> rooms
+  + Dormitory(name: String)
+  + getName(): String
+  + addRoom(room: Room): void
+  + getRooms(): List<Room>
+  + findAvailableRooms(): List<Room>
+  + getCapacity(): int
+  + isAvailable(): boolean
+  + addOccupant(student: Student): void
+  + removeOccupant(student: Student): void
+  + getOccupants(): List<Student>
+}
+
+class Room implements Accommodation {
+  - int number
+  - int capacity
+  - List<Student> occupants
+  + Room(number: int, capacity: int)
+  + getNumber(): int
+  + getCapacity(): int
+  + getName(): String
+  + isAvailable(): boolean
+  + addOccupant(student: Student): void
+  + removeOccupant(student: Student): void
+  + getOccupants(): List<Student>
+}
+
+class Student {
+  - String name
+  - int id
+  + Student(name: String, id: int)
+  + getName(): String
+  + getID(): int
+}
+
+Accommodation <|.. Dormitory
+Accommodation <|.. Room
+Room "1" *-- "*" Student
+
+@enduml

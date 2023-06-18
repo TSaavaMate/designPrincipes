@@ -1,0 +1,106 @@
+@startuml
+
+interface Board {
+  + initializeBoard(): void
+  + isValidMove(): boolean
+  + makeMove(): void
+  + isGameOver(): boolean
+}
+
+class ConcreteBoard {
+  + initializeBoard(): void
+  + isValidMove(): boolean
+  + makeMove(): void
+  + isGameOver(): boolean
+}
+
+class Cell {
+  - Position position
+  - Stone stone
+  + getStone(): Stone
+  + setStone(): void
+  + isEmpty(): boolean
+}
+
+class Stone {
+  - Color color
+  + getColor(): Color
+}
+
+abstract class Player {
+  - Color color
+  + getColor(): Color
+  + makeMove(): void
+}
+
+class HumanPlayer extends Player {
+  + getColor(): Color
+  + makeMove(): void
+}
+
+class AIPlayer extends Player {
+  + getColor(): Color
+  + makeMove(): void
+}
+
+class Move {
+  - Cell targetCell
+  - List<Cell> capturedStones
+  + getTargetCell(): Cell
+  + getCapturedStones(): List<Cell>
+}
+
+interface Game {
+  + startGame(): void
+  + switchPlayer(): void
+  + processMove(): void
+}
+
+abstract class AbstractGame implements Game {
+  - Board board
+  - Player[] players
+  - Player currentPlayer
+  + startGame(): void
+  + switchPlayer(): void
+  + processMove(): void
+}
+
+class ConcreteGame extends AbstractGame {
+  + startGame(): void
+  + switchPlayer(): void
+  + processMove(): void
+}
+
+interface UserInterface {
+  + displayBoard(): void
+  + displayMessage(): void
+  + getPlayerInput(): void
+}
+
+abstract class AbstractUserInterface implements UserInterface {
+  + displayBoard(): void
+  + displayMessage(): void
+  + getPlayerInput(): void
+}
+
+class ConcreteUserInterface extends AbstractUserInterface {
+  + displayBoard(): void
+  + displayMessage(): void
+  + getPlayerInput(): void
+}
+
+Board <|.. ConcreteBoard
+Player <|-- HumanPlayer
+Player <|-- AIPlayer
+Game <|.. ConcreteGame
+UserInterface <|.. ConcreteUserInterface
+Game <|-- AbstractGame
+UserInterface <|-- AbstractUserInterface
+
+Board "1" *-- "361" Cell
+Cell "1" -- "0..1" Stone
+Stone "1" -- "1" Color
+Move "1" -- "0..*" Cell
+Game "1" *-- "1" UserInterface
+
+@enduml
