@@ -9,21 +9,6 @@ interface Accommodation {
   + getOccupants(): List<Student>
 }
 
-class Dormitory implements Accommodation {
-  - String name
-  - List<Room> rooms
-  + Dormitory(name: String)
-  + getName(): String
-  + addRoom(room: Room): void
-  + getRooms(): List<Room>
-  + findAvailableRooms(): List<Room>
-  + getCapacity(): int
-  + isAvailable(): boolean
-  + addOccupant(student: Student): void
-  + removeOccupant(student: Student): void
-  + getOccupants(): List<Student>
-}
-
 class Room implements Accommodation {
   - int number
   - int capacity
@@ -38,6 +23,18 @@ class Room implements Accommodation {
   + getOccupants(): List<Student>
 }
 
+class Dormitory extends Room   {
+  - String name
+  - List<Room> rooms
+  + Dormitory(name: String)
+  + getName(): String
+  + addRoom(room: Room): void
+  + getRooms(): List<Room>
+  + findAvailableRooms(): List<Room>
+}
+
+
+
 class Student {
   - String name
   - int id
@@ -46,8 +43,6 @@ class Student {
   + getID(): int
 }
 
-Accommodation <|.. Dormitory
-Accommodation <|.. Room
 Room "1" *-- "*" Student
 
 @enduml

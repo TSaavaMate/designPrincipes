@@ -1,41 +1,38 @@
 @startuml
 
 interface PhoneBooth {
-  + getBoothNumber(): String
   + isOccupied(): boolean
   + occupy(phoneNumber: String): void
   + release(): void
-  + getPhoneNumber(): String
+  + insertPhoneNumber(): String
   + insertCoin(coin: Coin): void
-  + makeCall(callDuration: int): void
+  +interrupt():void
+  + makeCall(PublicCall: call): void
   + endCall(): void
 }
 
 class PublicPhoneBooth implements PhoneBooth {
-  - String boothNumber
   - boolean isOccupied
   - String phoneNumber
   - List<Coin> insertedCoins
   - int callDuration
-  + PublicPhoneBooth(boothNumber: String)
-  + getBoothNumber(): String
   + isOccupied(): boolean
   + occupy(phoneNumber: String): void
   + release(): void
-  + getPhoneNumber(): String
+  +interrupt():void
+  + insertPhoneNumber(): String
   + insertCoin(coin: Coin): void
-  + makeCall(callDuration: int): void
+  + makeCall(PublicCall: call): void
   + endCall(): void
 }
 
 interface Coin {
-  + getValue(): int
+  + getValue(type :Coins): int
 }
 
 class EuroCoin implements Coin {
   - int value
-  + EuroCoin(value: int)
-  + getValue(): int
+  + getValue(type :Coins): int
 }
 
 interface Call {
@@ -53,9 +50,15 @@ class PublicCall implements Call {
   + getReceiverPhoneNumber(): String
   + getDuration(): int
 }
-
+enum Coins{
+    Penny
+    Nickel
+    Dime
+    Quarter
+    Half Dollar
+    Dollar Coin
+}
 PhoneBooth <|.. PublicPhoneBooth
-PublicPhoneBooth "1" *-- "1..*" Coin
 Call <|.. PublicCall
 
 @enduml

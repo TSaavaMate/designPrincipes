@@ -1,0 +1,33 @@
+@startuml
+
+interface PowerSwitch {
+  + isOn(): boolean
+  + turnOn(): void
+  + turnOff(): void
+}
+
+class Printer implements PowerSwitch {
+  - boolean isOn
+  - int paperCount
+  - int inkLevel
+  + isOn(): boolean
+  + turnOn(): void
+  + turnOff(): void
+  + getPaperCount(): int
+  + addPaper(count: int): void
+  + printDocument(document: Document): void
+  + getInkLevel(): int
+  + replaceInk(): void
+}
+class Document {
+  - String content
+  + Document(content: String)
+  + getContent(): String
+}
+
+
+
+
+Printer "1" *-- "1" Document
+
+@enduml

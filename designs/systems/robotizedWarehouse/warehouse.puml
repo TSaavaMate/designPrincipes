@@ -24,11 +24,9 @@ class Item {
 }
 
 class Location {
-  - int x
-  - int y
-  + Location(x: int, y: int)
-  + getX(): int
-  + getY(): int
+  - String: position
+  + Location(String: position)
+  + getPosition():String
 }
 
 class AutomatedWarehouse implements Warehouse {
@@ -51,8 +49,6 @@ class AutomatedRobot implements Robot {
   + dropItem(item: Item, location: Location): void
 }
 
-Warehouse <|.. AutomatedWarehouse
-Robot <|.. AutomatedRobot
 
 AutomatedWarehouse "1" *-- "*" Item
 AutomatedWarehouse "1" *-- "*" Robot

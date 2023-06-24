@@ -15,23 +15,64 @@ abstract class CoffeeMachine implements PowerSwitch, Fillable {
   - String name
   - int waterLevel
   - int milkLevel
+  -int sugarLevel
   - int coffeeBeansLevel
   + CoffeeMachine(name: String)
   + getName(): String
-  + getLevel(): int
+  + getMilkLevel(): int
+  + getSugarLevel(): int
   + fill(level: int): void
   + makeCoffee(): void
   + cleanMachine(): void
 }
 
-class BasicCoffeeMachine extends CoffeeMachine {
+class ConcreteCoffeMachnine extends CoffeeMachine {
   + BasicCoffeeMachine(name: String)
   + makeCoffee(): void
 }
 
-interface Beverage {
-  + getType(): String
+abstract class Beverage{
+    -String description
+    + getDescription():String
+    +{abstract} cost():double
 }
+class AnyOtherConcreteCoffe{
+    + cost():double
+}
+class Decaf{
+    + cost():double
+}
+class Espresso{
+    + cost():double
+
+}
+
+abstract class CondimentDecorator extends Beverage {
+    +{abstract} getDescription()
+}
+class Mocha extends CondimentDecorator{
+    Beverage beverage
+    getDescription():String
+    cost():double
+}
+class AnyOtherCoffeType extends CondimentDecorator{
+    Beverage beverage
+    getDescription():String
+    cost():double
+}
+class Milk extends CondimentDecorator{
+    Beverage beverage
+    getDescription():String
+    cost():double
+}
+enum Coffe {
+Milk
+Mocha
+Whip
+}
+Beverage  *--  Espresso
+Beverage  *--  Decaf
+Beverage  *--  AnyOtherConcreteCoffe
 
 class Coffee implements Beverage {
   - String type
@@ -41,12 +82,11 @@ class Coffee implements Beverage {
 
 class Cup {
   - int size
-  + Cup(size: int)
   + getSize(): int
 }
 
-CoffeeMachine <|.. BasicCoffeeMachine
-CoffeeMachine "1" *-- "1" Beverage
+CoffeeMachine <|.. ConcreteCoffeMachnine
+Beverage  "1" *-- "1" CoffeeMachine
 CoffeeMachine "1" *-- "1" Cup
 
 @enduml

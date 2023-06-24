@@ -1,46 +1,33 @@
 @startuml
 
-interface Animal {
-  + eat(): void
+interface EatingBehavior{
+    +feed():void
 }
 
-abstract class AbstractAnimal implements Animal {
-  - String name
-  + AbstractAnimal(name: String)
-  + getName(): String
-  + eat(): void
+class feedHerbivore implements EatingBehavior{
+    +feed():void
+}
+class feedOmnivore implements EatingBehavior{
+    +feed():void
+}
+class feedCarnivore implements EatingBehavior{
+    +feed():void
 }
 
-interface Food {
-  + getFoodType(): String
+abstract class Animal{
+    -String:name
+    -EatingBehavior : eatingBehavior
+    +Animal(name:String)
+    +setEatingBehavior():void
+    +performFeed():void
+    +getName():String
 }
 
-class HerbivoreFood implements Food {
-  + getFoodType(): String
-}
+class Leopard extends Animal{}
+class Elephant extends Animal{}
+class Monkey extends Animal{}
+class Flamingo extends Animal{}
 
-class CarnivoreFood implements Food {
-  + getFoodType(): String
-}
-
-class OmnivoreFood implements Food {
-  + getFoodType(): String
-}
-
-class Herbivore extends AbstractAnimal {
-  + Herbivore(name: String)
-  + eat(): void
-}
-
-class Carnivore extends AbstractAnimal {
-  + Carnivore(name: String)
-  + eat(): void
-}
-
-class Omnivore extends AbstractAnimal {
-  + Omnivore(name: String)
-  + eat(): void
-}
 
 class Zookeeper {
   - List<Animal> animals
@@ -49,12 +36,12 @@ class Zookeeper {
   + feedAnimals(): void
 }
 
-Animal <|.. AbstractAnimal
-Food <|.. HerbivoreFood
-Food <|.. CarnivoreFood
-Food <|.. OmnivoreFood
-AbstractAnimal <|-- Herbivore
-AbstractAnimal <|-- Carnivore
-AbstractAnimal <|-- Omnivore
+EatingBehavior ..* Animal
+
+
+
+
+
+
 
 @enduml

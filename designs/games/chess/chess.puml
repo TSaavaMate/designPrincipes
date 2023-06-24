@@ -2,20 +2,20 @@
 
 interface Board {
   + initializeBoard(): void
-  + isValidMove(): boolean
+  + isValidMove(String position): boolean
   + makeMove(): void
   + isGameOver(): boolean
 }
 
 class ConcreteBoard {
   + initializeBoard(): void
-  + isValidMove(): boolean
+  + isValidMove(String position): boolean
   + makeMove(): void
   + isGameOver(): boolean
 }
 
 class Cell {
-  - Position position
+  - String position
   - Piece piece
   + getPiece(): Piece
   + setPiece(): void
@@ -25,17 +25,17 @@ class Cell {
 abstract class Piece {
   - Color color
   + getColor(): Color
-  + isValidMove(): boolean
+  + isValidMove(String position): boolean
 }
 
 class King {
   + getColor(): Color
-  + isValidMove(): boolean
+  + isValidMove(String position): boolean
 }
 
 class Queen {
   + getColor(): Color
-  + isValidMove(): boolean
+  + isValidMove(String position): boolean
 }
 
 class Rook {
@@ -45,17 +45,17 @@ class Rook {
 
 class Bishop {
   + getColor(): Color
-  + isValidMove(): boolean
+  + isValidMove(String position): boolean
 }
 
 class Knight {
   + getColor(): Color
-  + isValidMove(): boolean
+  + isValidMove(String position): boolean
 }
 
 class Pawn {
   + getColor(): Color
-  + isValidMove(): boolean
+  + isValidMove(String position): boolean
 }
 
 interface Player {
@@ -89,7 +89,7 @@ interface Game {
 
 abstract class AbstractGame implements Game {
   - Board board
-  - Player[] players
+  - List<Player> players
   - Player currentPlayer
   + startGame(): void
   + switchPlayer(): void
@@ -105,19 +105,19 @@ class ConcreteGame extends AbstractGame {
 interface UserInterface {
   + displayBoard(): void
   + displayMessage(): void
-  + getPlayerInput(): void
+  + getPlayerMove(): void
 }
 
 abstract class AbstractUserInterface implements UserInterface {
   + displayBoard(): void
   + displayMessage(): void
-  + getPlayerInput(): void
+  + getPlayerMove(): void
 }
 
 class ConcreteUserInterface extends AbstractUserInterface {
   + displayBoard(): void
   + displayMessage(): void
-  + getPlayerInput(): void
+  + getPlayerMove(): void
 }
 
 Board <|.. ConcreteBoard
